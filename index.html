@@ -1,0 +1,317 @@
+<title>Sseumseum Cabinet</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Gowun+Dodum&display=swap">
+<style>
+  :root{
+    --bg:#f2e3aa;
+    --panel:#fcf9f0;
+    --teal:#93d1c6;
+    --teal-deep:#4d8c80;
+    --ink:#201a12;
+    --ink-soft:#6b5947;
+  }
+  *{box-sizing:border-box;}
+  .sm-page{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    padding-block:0 72px;
+    min-height:100%;
+  }
+  .sm-wrap{max-width:1160px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Scene (matches Desktop - 1) ---------- */
+  .sm-scene{width:100%;display:block;}
+  .sm-scene text{font-family:'Baloo 2',sans-serif;}
+  .fo-root{width:100%;height:100%;}
+  .door-cell{
+    position:relative;
+    width:100%;height:100%;
+    font-family:'Baloo 2','Gowun Dodum',sans-serif;
+  }
+  @media (max-width:820px){
+    .sm-scene .door-cell{display:none;}
+  }
+
+  .sm-back{
+    position:absolute;inset:0;
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:.35em;
+    padding:9% 10%;
+    text-align:left;
+  }
+  .sm-back svg{width:22%;height:auto;color:var(--teal-deep);flex:0 0 auto;}
+  .sm-back .sm-name{font-size:1.35em;margin:0;color:var(--ink);}
+  .sm-back .sm-tag{font-size:.6em;line-height:1.4;color:var(--ink-soft);font-family:'Gowun Dodum',sans-serif;}
+  .sm-back .sm-go{font-size:.55em;color:var(--teal-deep);font-family:'Gowun Dodum',sans-serif;}
+
+  .sm-door{
+    position:absolute;inset:0;
+    background:var(--panel);
+    transform-origin:left center;
+    transition:transform .55s cubic-bezier(.22,.68,0,1.15), box-shadow .55s ease;
+    backface-visibility:hidden;
+    display:flex;
+    align-items:flex-start;
+    padding:9% 10%;
+    cursor:pointer;
+    font-size:27px;
+    font-weight:500;
+    color:var(--ink);
+  }
+  .sm-cell:hover .sm-door,
+  .sm-cell.is-open .sm-door{
+    transform:rotateY(-108deg);
+    box-shadow:10px 14px 30px rgba(0,0,0,.28);
+  }
+
+  .sm-hint{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:13px;
+    margin:14px 4px 0;
+  }
+
+  /* ---------- Mobile door grid (interaction fallback) ---------- */
+  .sm-mobile{display:none;margin-top:8px;}
+  @media (max-width:820px){
+    .sm-mobile{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      perspective:1400px;
+    }
+    .sm-mobile .sm-cell{
+      position:relative;
+      aspect-ratio:1/1;
+      transform-style:preserve-3d;
+      border-radius:6px;
+      overflow:visible;
+    }
+    .sm-mobile .sm-back,
+    .sm-mobile .sm-door{border-radius:6px;}
+    .sm-mobile .sm-back{box-shadow:inset 0 0 0 1px rgba(32,26,18,.1);}
+  }
+
+  /* ---------- Detail ---------- */
+  .sm-detail{margin-top:56px;}
+  .sm-detail h2{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:700;
+    font-size:24px;
+    color:var(--ink);
+    text-align:center;
+    margin:0 0 28px;
+  }
+  .sm-row{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    padding:18px;
+    border-radius:12px;
+    background:var(--panel);
+    margin-bottom:12px;
+    scroll-margin-top:24px;
+    transition:box-shadow .3s ease;
+  }
+  .sm-row-icon{
+    flex:0 0 auto;
+    width:56px;height:56px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(77,140,128,.14);
+    color:var(--teal-deep);
+  }
+  .sm-row-icon svg{width:30px;height:30px;}
+  .sm-row-body h3{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    margin:0 0 2px;
+    color:var(--ink);
+  }
+  .sm-row-body .sm-kw{color:var(--teal-deep);font-size:12.5px;margin-right:6px;font-family:'Gowun Dodum',sans-serif;}
+  .sm-row-body p{
+    margin:6px 0 0;
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:62ch;
+  }
+  .sm-row.sm-flash{box-shadow:0 0 0 2px var(--teal-deep);}
+  @media (max-width:560px){.sm-row{flex-wrap:wrap;}}
+
+  .sm-footer{
+    text-align:center;
+    margin-top:56px;
+    font-size:12px;
+    color:var(--ink-soft);
+    letter-spacing:.5px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .sm-door{transition:none!important;}
+  }
+</style>
+
+<div class="sm-page">
+  <svg class="sm-scene" viewBox="0 0 1440 1024" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1440" height="1024" fill="#f2e3aa"/>
+
+    <path d="M65.8359 74.1183L98.0663 52.6074L106.457 63.8703L122.954 52.8767L129.819 62.0995L126.392 64.4329L136.723 78.1775V110.83H65.912L65.8359 74.1183Z" fill="#1a1410"/>
+    <path d="M97.3207 58.2837L70.291 76.2812L72.2105 79.1525L99.2402 61.155L97.3207 58.2837Z" fill="#f2e3aa"/>
+    <path d="M94.4379 62.144L91.6816 64.229L100.412 75.7247L103.168 73.6397L94.4379 62.144Z" fill="#f2e3aa"/>
+    <path d="M128.24 79.157L116.889 64.5218L119.642 62.437L130.996 77.0721L128.24 79.157Z" fill="#f2e3aa"/>
+    <path d="M122.551 58.2871L95.5215 76.2846L97.441 79.1559L124.471 61.1584L122.551 58.2871Z" fill="#f2e3aa"/>
+    <path d="M132.553 81.4883H69.7148V84.94H132.553V81.4883Z" fill="#f2e3aa"/>
+    <path d="M129.627 102.073H72.6504V105.525H129.627V102.073Z" fill="#f2e3aa"/>
+    <path d="M73.4396 87.564H69.8047V107.111H73.4396V87.564Z" fill="#f2e3aa"/>
+    <path d="M132.553 87.4946H128.918V107.111H132.553V87.4946Z" fill="#f2e3aa"/>
+    <path d="M103.953 87.564H100.318V99.2652H103.953V87.564Z" fill="#f2e3aa"/>
+
+    <text x="700" y="215" text-anchor="middle" font-size="64" font-weight="500" fill="#1a1410">Love is …</text>
+
+    <path d="M1131.94 441.987L937.473 451.844L1032.34 309.93L1131.94 441.987Z" fill="#93d1c6"/>
+    <g id="roofDashes" fill="#93d1c6"></g>
+
+    <foreignObject x="0" y="0" width="193.736" height="193.736" transform="matrix(0.99863,0.052336,0,1,308.777,436.75)"><div xmlns="http://www.w3.org/1999/xhtml" class="fo-root" data-slot="cup"></div></foreignObject>
+    <foreignObject x="0" y="0" width="193.736" height="193.736" transform="matrix(0.99863,0.052336,0,1,518.148,447.722)"><div xmlns="http://www.w3.org/1999/xhtml" class="fo-root" data-slot="plate"></div></foreignObject>
+    <foreignObject x="0" y="0" width="193.736" height="193.736" transform="matrix(0.99863,0.052336,0,1,727.514,458.695)"><div xmlns="http://www.w3.org/1999/xhtml" class="fo-root" data-slot="doorbell"></div></foreignObject>
+    <foreignObject x="0" y="0" width="193.736" height="193.736" transform="matrix(0.99863,0.052336,0,1,727.514,668.607)"><div xmlns="http://www.w3.org/1999/xhtml" class="fo-root" data-slot="umbrella"></div></foreignObject>
+    <foreignObject x="0" y="0" width="403.648" height="193.736" transform="matrix(0.99863,0.052336,0,1,308.777,667.774)"><div xmlns="http://www.w3.org/1999/xhtml" class="fo-root" data-slot="chair"></div></foreignObject>
+    <foreignObject x="0" y="0" width="193.736" height="403.648" transform="matrix(0.99863,-0.052336,0,1,937.744,468.001)"><div xmlns="http://www.w3.org/1999/xhtml" class="fo-root" data-slot="lamp"></div></foreignObject>
+  </svg>
+
+  <div class="sm-wrap">
+    <p class="sm-hint">문 위에 마우스를 올리면 열려요 · 모바일은 아래 카드를 톡 하면 이야기로 이동해요</p>
+
+    <div class="sm-mobile" id="mobileGrid"></div>
+
+    <section class="sm-detail" id="detail">
+      <h2>여섯 개의 문, 여섯 가지 사랑</h2>
+      <div id="detailList"></div>
+    </section>
+
+    <footer class="sm-footer">SSEUMSEUM · 일상의 물건에 담은 사랑의 언어</footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ICONS = {
+    cup: '<path d="M14 22h30v20a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10V22Z"/><path d="M44 26h6a7 7 0 0 1 0 14h-6"/><path d="M22 12c0 3 3 3 3 6M32 12c0 3 3 3 3 6"/>',
+    plate: '<g transform="rotate(-8 32 32)"><ellipse cx="32" cy="34" rx="22" ry="13"/><ellipse cx="32" cy="34" rx="12" ry="7"/></g>',
+    doorbell: '<rect x="20" y="10" width="24" height="40" rx="8"/><circle cx="32" cy="30" r="5"/><path d="M48 20c4 4 4 12 0 16M16 20c-4 4-4 12 0 16"/>',
+    umbrella: '<path d="M10 30a22 22 0 0 1 44 0Z"/><path d="M32 30v22a5 5 0 0 1-8 4"/><path d="M10 30q22-8 44 0"/>',
+    chair: '<path d="M18 10v24M18 10h20M46 10v34M18 34h28"/><path d="M18 34v20M46 44v10"/>',
+    lamp: '<path d="M22 18h20l6 16H16l6-16Z"/><path d="M32 34v16M22 54h20"/><path d="M32 8v4M44 12l-2 3M20 12l2 3"/>'
+  };
+
+  var PRODUCTS = [
+    {id:'cup', name:'컵', kw:'기대게 해주는', tag:'사랑은 기댈 곳이 되어주는 것',
+     detail:'손잡이 대신 낮게 낮춘 굽이 두 손을 자연스레 감싸게 합니다.', icon:'cup'},
+    {id:'plate', name:'접시', kw:'기울어지는', tag:'사랑은 좋은 것을 더 주고 싶은 마음',
+     detail:'한쪽으로 살짝 기울인 테두리가 마지막 한 입까지 상대 쪽으로 모이게 합니다.', icon:'plate'},
+    {id:'doorbell', name:'도어벨', kw:'챙겨주는', tag:'사랑은 기억해주는 것',
+     detail:'발소리를 기억해 두었다가, 익숙한 걸음에는 다른 소리로 인사를 건넵니다.', icon:'doorbell'},
+    {id:'umbrella', name:'우산', kw:'함께 드는', tag:'사랑은 같이 해주는 것',
+     detail:'손잡이를 옆으로 옮겨, 두 사람이 나란히 들어도 어깨가 젖지 않게 했습니다.', icon:'umbrella'},
+    {id:'chair', name:'의자', kw:'가까워지는', tag:'사랑은 옆에 있는 것',
+     detail:'앞다리를 살짝 안쪽으로 모아, 마주 앉을수록 두 의자가 저절로 가까워집니다.', icon:'chair'},
+    {id:'lamp', name:'조명', kw:'빛을 맞춰주는', tag:'사랑은 상대에게 맞춰주는 것',
+     detail:'손끝으로 갓을 기울이면, 빛의 각도가 상대의 손끝을 따라 움직입니다.', icon:'lamp'}
+  ];
+
+  function svg(iconKey){
+    return '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">'+ICONS[iconKey]+'</svg>';
+  }
+
+  function goToDetail(id){
+    var target = document.getElementById('detail-' + id);
+    if (!target) return;
+    target.scrollIntoView({behavior:'smooth', block:'center'});
+    target.classList.add('sm-flash');
+    setTimeout(function(){ target.classList.remove('sm-flash'); }, 1200);
+  }
+
+  function buildDoorCell(p){
+    var cell = document.createElement('div');
+    cell.className = 'sm-cell';
+    cell.setAttribute('data-product', p.id);
+
+    var back = document.createElement('div');
+    back.className = 'sm-back';
+    back.innerHTML = svg(p.icon) +
+      '<p class="sm-name">' + p.name + '</p>' +
+      '<p class="sm-tag">' + p.tag + '</p>' +
+      '<span class="sm-go">자세히 보기 →</span>';
+
+    var door = document.createElement('div');
+    door.className = 'sm-door';
+    door.textContent = 'Welcome !';
+
+    cell.appendChild(back);
+    cell.appendChild(door);
+
+    cell.addEventListener('click', function(e){
+      var isTouch = window.matchMedia('(hover: none)').matches;
+      if (isTouch && !cell.classList.contains('is-open')) {
+        e.preventDefault();
+        document.querySelectorAll('.sm-cell.is-open').forEach(function(c){
+          if (c !== cell) c.classList.remove('is-open');
+        });
+        cell.classList.add('is-open');
+        return;
+      }
+      goToDetail(p.id);
+    });
+
+    return cell;
+  }
+
+  var mobileGrid = document.getElementById('mobileGrid');
+  var detailList = document.getElementById('detailList');
+
+  PRODUCTS.forEach(function(p){
+    var slot = document.querySelector('.fo-root[data-slot="' + p.id + '"]');
+    if (slot) slot.appendChild(buildDoorCell(p));
+
+    mobileGrid.appendChild(buildDoorCell(p));
+
+    var row = document.createElement('div');
+    row.className = 'sm-row';
+    row.id = 'detail-' + p.id;
+    row.innerHTML =
+      '<div class="sm-row-icon">' + svg(p.icon) + '</div>' +
+      '<div class="sm-row-body">' +
+        '<h3><span class="sm-kw">' + p.kw + '</span>' + p.name + '</h3>' +
+        '<p>' + p.tag + '. ' + p.detail + '</p>' +
+      '</div>';
+    detailList.appendChild(row);
+  });
+
+  var dashRows = [
+    {y:405, x0:322, count:9, dx:73, len:46, rot:-3},
+    {y:376, x0:392, count:8, dx:73, len:44, rot:-3},
+    {y:347, x0:452, count:8, dx:70, len:40, rot:-3},
+    {y:318, x0:562, count:7, dx:63, len:34, rot:-3}
+  ];
+  var dashGroup = document.getElementById('roofDashes');
+  dashRows.forEach(function(row){
+    for (var i = 0; i < row.count; i++) {
+      var x = row.x0 + i * row.dx;
+      var r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      r.setAttribute('x', 0);
+      r.setAttribute('y', 0);
+      r.setAttribute('width', row.len);
+      r.setAttribute('height', 13);
+      r.setAttribute('rx', 6.5);
+      r.setAttribute('transform', 'translate(' + x + ',' + row.y + ') rotate(' + row.rot + ')');
+      dashGroup.appendChild(r);
+    }
+  });
+})();
+</script>
