@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sseumseum · FLIM</title>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#fff;}
+  .page{width:100%;max-width:1600px;margin:0 auto;padding-bottom:4%;}
+  .logo{display:block;margin-left:4.54%;margin-top:3.67%;width:4.94%;min-width:44px;}
+  .logo svg{display:block;width:100%;height:auto;}
+  .logo:focus-visible{outline:3px solid #161412;outline-offset:4px;}
+  .stage{display:flex;justify-content:center;padding:2.5% 20px 0;}
+  video{
+    display:block;
+    height:min(86vh, 1200px);
+    max-width:100%;
+    aspect-ratio:9 / 16;
+    object-fit:contain;
+    background:#000;
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <a class="logo" href="index.html" aria-label="메인 화면으로 돌아가기" title="메인으로">
+    <svg viewBox="64 51 74 62" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65.8359 74.1183L98.0663 52.6074L106.457 63.8703L122.954 52.8767L129.819 62.0995L126.392 64.4329L136.723 78.1775V110.83H65.912L65.8359 74.1183Z" fill="black"/><path d="M97.3207 58.2837L70.291 76.2812L72.2105 79.1525L99.2402 61.155L97.3207 58.2837Z" fill="white"/><path d="M94.4379 62.144L91.6816 64.229L100.412 75.7247L103.168 73.6397L94.4379 62.144Z" fill="white"/><path d="M128.24 79.157L116.889 64.5218L119.642 62.437L130.996 77.0721L128.24 79.157Z" fill="white"/><path d="M122.551 58.2871L95.5215 76.2846L97.441 79.1559L124.471 61.1584L122.551 58.2871Z" fill="white"/><path d="M132.553 81.4883H69.7148V84.94H132.553V81.4883Z" fill="white"/><path d="M129.627 102.073H72.6504V105.525H129.627V102.073Z" fill="white"/><path d="M73.4396 87.564H69.8047V107.111H73.4396V87.564Z" fill="white"/><path d="M132.553 87.4946H128.918V107.111H132.553V87.4946Z" fill="white"/><path d="M103.953 87.564H100.318V99.2652H103.953V87.564Z" fill="white"/></svg>
+  </a>
+  <div class="stage">
+    <video src="video/flim.mp4" controls playsinline preload="auto" aria-label="씀씀 FLIM 영상"></video>
+  </div>
+</main>
+</body>
+</html>
