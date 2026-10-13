@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sseumseum · PRODUCTS</title>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#fff;}
+  .page{position:relative;width:100%;max-width:1600px;margin:0 auto;}
+  .page img.bg{display:block;width:100%;height:auto;}
+  .home{position:absolute;display:block;}
+  .home:focus-visible,.tile:focus-visible{outline:3px solid #161412;outline-offset:2px;}
+  .tile{
+    position:absolute;display:block;
+    background-image:url(image/products-hover.jpg);
+    background-repeat:no-repeat;
+    opacity:0;
+    transition:opacity .3s ease;
+    cursor:pointer;
+  }
+  .tile:hover,.tile:focus-visible,.tile.is-on{opacity:1;}
+  @media (prefers-reduced-motion:reduce){.tile{transition:none;}}
+</style>
+</head>
+<body>
+<main class="page">
+  <img class="bg" src="image/products.jpg" width="1497" height="1065" alt="씀씀 제품 — 컵, 도어벨, 접시, 우산, 조명, 의자">
+  <a class="home" href="index.html" aria-label="메인 화면으로 돌아가기" title="메인으로" style="left:3.741%;top:4.131%;width:6.680%;height:7.887%"></a>
+  <a class="tile" href="product-cup.html" aria-label="컵" style="left:5.110%;top:16.667%;width:28.490%;height:34.460%;background-size:351.00% 290.19%;background-position:7.146% 25.430%"></a>
+  <a class="tile" href="product-doorbell.html" aria-label="도어벨" style="left:35.805%;top:16.667%;width:28.490%;height:34.460%;background-size:351.00% 290.19%;background-position:50.070% 25.430%"></a>
+  <a class="tile" href="product-plate.html" aria-label="접시" style="left:66.466%;top:16.667%;width:28.490%;height:34.460%;background-size:351.00% 290.19%;background-position:92.947% 25.430%"></a>
+  <a class="tile" href="product-umbrella.html" aria-label="우산" style="left:5.110%;top:53.944%;width:28.490%;height:34.460%;background-size:351.00% 290.19%;background-position:7.146% 82.307%"></a>
+  <a class="tile" href="product-lamp.html" aria-label="조명" style="left:35.805%;top:53.944%;width:28.490%;height:34.460%;background-size:351.00% 290.19%;background-position:50.070% 82.307%"></a>
+  <a class="tile" href="product-chair.html" aria-label="의자" style="left:66.466%;top:53.944%;width:28.490%;height:34.460%;background-size:351.00% 290.19%;background-position:92.947% 82.307%"></a>
+</main>
+<script>
+(function(){
+  var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile'));
+  var touch = window.matchMedia('(hover: none)').matches;
+  if (!touch) return;
+  tiles.forEach(function(t){
+    t.addEventListener('click', function(e){
+      if (!t.classList.contains('is-on')) {
+        e.preventDefault();
+        tiles.forEach(function(o){ o.classList.remove('is-on'); });
+        t.classList.add('is-on');
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
